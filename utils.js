@@ -1,0 +1,11 @@
+export const norm = v => String(v ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+export const num = v => { const s=String(v??'').replace(/\./g,'').replace(',','.').replace(/[^0-9.-]/g,''); return Number(s)||0; };
+export const date = v => { const s=String(v??'').trim(); if(!s) return null; let m=s.match(/^(\d{2})\/(\d{2})\/(\d{4})/); if(m) return new Date(+m[3],+m[2]-1,+m[1]); m=s.match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? new Date(+m[1],+m[2]-1,+m[3]) : null; };
+export const br = n => Math.round(n||0).toLocaleString('pt-BR');
+export const pct = n => `${(n||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})}%`;
+export const monthName = d => d.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+export const monthShort = d => d.toLocaleDateString('pt-BR',{month:'short'}).replace('.','');
+export function parseCsv(text) { const rows=[]; let row=[],cell='',quote=false; for(let i=0;i<text.length;i++){const c=text[i]; if(c==='"'){if(quote&&text[i+1]==='"'){cell+='"';i++;}else quote=!quote;} else if(c===';'&&!quote){row.push(cell.trim());cell='';}else if((c==='\n'||c==='\r')&&!quote){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell.trim()); if(row.some(x=>x!==''))rows.push(row); row=[];cell='';}else cell+=c;} if(cell||row.length){row.push(cell.trim());rows.push(row)} const [headers,...data]=rows; return data.map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]??'']))); }
+export async function readCsv(file){const b=await file.arrayBuffer();let text=new TextDecoder('utf-8').decode(b);if((text.match(/�/g)||[]).length>3)text=new TextDecoder('windows-1252').decode(b);return parseCsv(text);}
+export function modality(v){const x=norm(v);if(x.includes('apoio'))return 'Apoio à Produção';if(x.includes('associativa'))return 'Carta de Crédito Associativa';if(x.includes('individual'))return 'Carta de Crédito Individual';if(x.includes('fundo social'))return 'Fundo Social';if(x.includes('classe media'))return 'Classe Média';if(x.includes('pro-cotista'))return 'Pró-Cotista';return String(v||'Outros').trim();}
+export function barChart(items, max){return `<div class="chart">${items.map(x=>`<div class="bar-row"><span>${x.label}</span><div class="bar-track"><i style="width:${Math.max(1,x.value/max*100)}%;background:${x.color||'#087ab4'}"></i></div><b>${br(x.value)}</b></div>`).join('')}</div>`}
