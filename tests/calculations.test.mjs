@@ -1,5 +1,11 @@
 import assert from 'node:assert/strict';
 import { financial, ogu, rcb, scenarios } from '../calculations.js';
+import { parseCsv } from '../utils.js';
+
+const commaCsv = parseCsv('\uFEFF"txt_numero_contrato","dte_data_contratacao","txt_pmcmv"\n"123","09/09/2026","S"');
+assert.deepEqual(commaCsv, [{txt_numero_contrato:'123',dte_data_contratacao:'09/09/2026',txt_pmcmv:'S'}], 'reconhece CSV com vírgulas, aspas e BOM');
+const semicolonCsv = parseCsv('campo_a;campo_b\n1;2');
+assert.deepEqual(semicolonCsv, [{campo_a:'1',campo_b:'2'}], 'mantém suporte a CSV com ponto e vírgula');
 
 const fgts = [
   {mcmv_fgts_06_txt_programa_fed:'MCMV',mcmv_fgts_20_txt_ano_contratacao:'2026',mcmv_fgts_21_txt_mes_contratacao:'01',mcmv_fgts_08_txt_programa_fgts:'Apoio à Produção',mcmv_fgts_15_txt_faixa:'Faixa 1',mcmv_fgts_14_qtd_contratos:'10'},
