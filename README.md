@@ -2,6 +2,8 @@
 
 Aplicação estática para gerar boletins mensal e semanal do Programa Minha Casa, Minha Vida. Todo processamento ocorre localmente no navegador: os CSVs não são enviados, armazenados nem incluídos neste repositório.
 
+Os arquivos podem usar separador `;` ou `,`; ambos são reconhecidos automaticamente. A exportação PNG usa uma cópia local da biblioteca necessária, sem depender de CDN.
+
 ## Uso
 
 1. Abra a aplicação publicada ou execute um servidor HTTP local nesta pasta.

@@ -6,13 +6,14 @@
   <meta name="description" content="Gerador local dos boletins mensal e semanal do Minha Casa, Minha Vida." />
   <title>Boletins MCMV</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="fidelity.css" />
 </head>
 <body>
   <main class="app-shell">
     <header class="app-header"><div><p class="eyebrow">MINISTÉRIO DAS CIDADES · SNH</p><h1>Gerador de boletins MCMV</h1><p>Os arquivos são lidos e processados somente neste navegador.</p></div><span class="privacy-badge">Processamento local</span></header>
     <section class="panel controls no-export">
       <h2>1. Carregue os arquivos CSV</h2>
-      <p class="help">Aceita arquivos com sufixo de data. Separador <code>;</code>, UTF-8 ou Windows-1252.</p>
+      <p class="help">Aceita arquivos com sufixo de data. Separador <code>;</code> ou <code>,</code>, UTF-8 ou Windows-1252.</p>
       <div class="upload-grid" id="upload-grid"></div>
       <details class="assumptions"><summary>Premissas de cálculo</summary><div class="assumption-fields"><label>Meta nacional (UH)<input id="nationalTarget" type="number" value="3000000" min="1"></label><label>Meta anual OGU (UH)<input id="oguTarget" type="number" value="100000" min="1"></label><label>Estoque até 31/12/2025 (UH)<input id="baseStock" type="number" value="2148217" min="0"></label></div></details>
       <div class="actions"><button id="generate" disabled>Gerar boletins</button><button id="downloadPng" disabled>Baixar PNG</button><button id="printPdf" disabled>Salvar em PDF</button></div>
@@ -25,7 +26,7 @@
       <article id="weekly" class="bulletin weekly bulletin-page hidden"></article>
     </section>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="vendor/html2canvas.min.js"></script>
   <script type="module" src="app.js"></script>
 </body>
 </html>
